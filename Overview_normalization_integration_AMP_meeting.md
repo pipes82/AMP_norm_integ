@@ -113,7 +113,7 @@ _**Recommendations:**_
 Generally, we always look at our clustering **without integration** before deciding whether we need to perform any alignment. **Do not just always perform integration because you think there might be differences - explore the data.** If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/unintegrated_umap.png" width="400">
+<img src="./img/unintegrated_umap.png" width="400">
 </p>
 
 Condition-specific clustering of the cells indicates that we need to integrate the cells across conditions to ensure that cells of the same cell type cluster together. 
