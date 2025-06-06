@@ -5,7 +5,7 @@ _**By Mary Piper (Pfizer), including materials by the [Harvard Chan Bioinformati
 # Normalization
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/sc_workflow_2022.jpg" width="630">
+<img src="./img/sc_workflow_2022.jpg" width="630">
 </p>
 
 
@@ -32,7 +32,7 @@ Each cell in scRNA-seq will have a differing number of reads associated with it.
 In the example below, each gene appears to have doubled in expression in cell 2, however this is a consequence of cell 2 having twice the sequencing depth.
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/sequencing_depth.png" width="400">
+<img src="./img/sequencing_depth.png" width="400">
 </p>
 
 
@@ -84,7 +84,7 @@ for (i in 1:length(split_seurat)) {
 # Integration
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/sc_workflow_2022.jpg" width="630">
+<img src="./img/sc_workflow_2022.jpg" width="630">
 </p>
 
 ***
@@ -124,7 +124,7 @@ To integrate, we will use the shared highly variable genes (identified using SCT
 The integration method that is available in the Seurat package utilizes the canonical correlation analysis (CCA). This method expects "correspondences" or **shared biological states** among at least a subset of single cells across the groups. The steps in the `Seurat` integration workflow are outlined in the figure below:
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/integration.png" width="600">
+<img src="./img/integration.png" width="600">
 </p>
 
 _**Image credit:** Stuart T and Butler A, et al. Comprehensive integration of single cell data, bioRxiv 2018 (https://doi.org/10.1101/460147)_
@@ -181,9 +181,9 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 ```
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/SC_umap_split.png" width="600">
+<img src="./img/SC_umap_split.png" width="600">
 </p>
 
 <p align="center">
-<img src="../img/seurat_norm_integ_AMP/SC_umap_split_int.png" width="600">
+<img src="./img/SC_umap_split_int.png" width="600">
 </p>
