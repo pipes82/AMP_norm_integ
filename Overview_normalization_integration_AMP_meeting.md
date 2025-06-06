@@ -43,12 +43,12 @@ From the Satija sctransform paper [[Hafemeister & Satija, 2019](https://genomebi
 
 2. _The variance of a normalized gene (across cells) should primarily reflect biological heterogeneity, independent of gene abundance or sequencing depth. For example, genes with high variance after normalization should be differentially expressed across cell types, while housekeeping genes should exhibit low variance. Additionally, the variance of a gene should be similar when considering either deeply sequenced cells, or shallowly sequenced cells._
 
-Many of the current methods for normalization rely on per cell size factors; however, these methods assume the RNA content is constant for all cells in the dataset and that a single scaling factor for all genes can be applied [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)]. A frequently observed feature of scRNA-seq data normalized using these methods is that the largest source of variation (PC1) in the dataset is the library size, indicating ineffective normalization. 
+Many of the current methods for normalization rely on per cell size factors; however, these methods assume the **RNA content is constant for all cells in the dataset** and that a single scaling factor for all genes can be applied [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)]. A frequently observed feature of scRNA-seq data normalized using these methods is that the largest source of variation (PC1) in the dataset is the library size, indicating ineffective normalization. 
 
 [Germain et. al. (2020)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02136-7)
 found sctransform to perform better than other methods for separating subpopulations and removing the effect of library size.
 
-sctransform specifically models the data with a GLM relating cellular sequencing depth to gene molecule counts. The Pearson residuals of the model are calculated and represent a variance-stabilization transformation, removing the dependence between a gene’s average expression and cell-to-cell variation [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)]. [Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) explain the benefits of sctransform as: 
+Sctransform creates a generalized linear model (GLM) for each gene with UMI counts as the response and sequencing depth as the explanatory variable. The Pearson residuals of the model are calculated and represent a variance-stabilization transformation, removing the dependence between a gene’s average expression and cell-to-cell variation [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)]. [Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) explain the benefits of sctransform as: 
 
 1. _We do not assume a fixed “size,” or expected total molecular count, for any cell._
 
@@ -57,6 +57,11 @@ sctransform specifically models the data with a GLM relating cellular sequencing
 3. _Our VST is data driven and does not involve heuristic steps, such as a log-transformation, pseudocount addition, or z-scoring._
 
 4. _... Pearson residuals are independent of sequencing depth and can be used for variable gene selection, dimensional reduction, clustering, visualization, and differential expression._
+
+The sctransform paper showed that the same constant scaling factor cannot normalize different groups of genes, by demonstrating the inability of scaling factors to effectively normalize high abundance genes. In addition, with log-normalized data, it was observed that cells with low total UMI counts were found to have much higher variance for the more highly abundant genes, thereby lowering the variance for other gene groups. 
+
+We first show that different groups of genes cannot be normalized by the same constant factor, representing an intrinsic challenge for scaling-factor-based normalization schemes, regardless of how the factors themselves are calculated. We instead propose to construct a generalized linear model (GLM) for each gene with UMI counts as the response and sequencing depth as the explanatory variable. We explore potential error models for the GLM and find that the use of unconstrained NB or ZINB models leads to overfitting of scRNA-seq data and a significant dampening of biological variance. To address this, we find that by pooling information across genes with similar abundances, we can regularize parameter estimates and obtain reproducible error models. The residuals of our “regularized negative binomial regression” represent effectively normalized data values that are no longer influenced by technical characteristics, but preserve heterogeneity driven by distinct biological states.
+
 
 I would use R code similar to the code below to run sctransform (I also install the glmGamPoi package to improve speed). In the code below, I regress out mitochondrial content and cell cycle scores, but I would generally check my data before including these terms:
 
