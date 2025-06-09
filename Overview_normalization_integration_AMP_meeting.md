@@ -201,6 +201,7 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 <img src="./img/SC_umap_split_int.png" width="600">
 </p>
 
+# Downstream code
 
 ```r
 # Determine the clusters for various resolutions                                
