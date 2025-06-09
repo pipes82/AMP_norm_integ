@@ -2,8 +2,6 @@
 
 _**By Mary Piper (Pfizer), including materials by the [Harvard Chan Bioinformatics Core](https://hbctraining.github.io/main/)**_
 
-# Workflow for the identification of subpopulations & differences in disease
-
 <p align="center">
 <img src="./img/sc_workflow_2022.jpg" width="630">
 </p>
