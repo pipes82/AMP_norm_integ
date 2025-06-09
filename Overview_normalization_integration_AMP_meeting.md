@@ -20,7 +20,7 @@ To identify different subpopulations of major cell types, I would perform the fo
 7. **Subclustering** for any cell types needing more detailed characterization.
 8. **Pseudobulk differential expression analysis** for identification of changes due to differences in condition.
 
-* If I am exploring sex-specific differences between disease and healthy conditions, I would perform this workflow and perform the pseudobulk differential expression with an interaction term (e.g. ~ sex + condition + sex:condition).*
+_If I am exploring **sex-specific differences between disease and healthy conditions**, I would perform this workflow and perform the pseudobulk differential expression with an interaction term (e.g. ~ sex + condition + sex:condition)._
 
 # Normalization
 
