@@ -25,21 +25,15 @@ _**Recommendations:**_
  
 ***
 
-An essential first step in the majority of mRNA expression analyses is normalization, whereby systematic variations are adjusted for to **make expression counts comparable across genes and cells**. The counts of mapped reads for each gene is proportional to the expression of RNA ("interesting") in addition to many other factors ("uninteresting"). Normalization is the process of adjusting raw count values to account for the "uninteresting" factors. 
+Within scRNA-seq data, the counts of mapped reads for each gene is proportional to the expression of RNA ("interesting") in addition to many other factors ("uninteresting"). Normalization is the process of adjusting raw count values to account for the "uninteresting" factors. 
 
-Each cell in scRNA-seq will have a differing number of reads associated with it. So to accurately compare expression between cells, it is necessary to normalize for sequencing depth. Accounting for sequencing depth is necessary for comparison of gene expression between cells. 
+From the Satija sctransform paper [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)], the qualities of an effectively normalized dataset were described:
 
-In the example below, each gene appears to have doubled in expression in cell 2, however this is a consequence of cell 2 having twice the sequencing depth.
+1. _In general, the normalized expression level of a gene should not be correlated with the total sequencing depth of a cell. Downstream analytical tasks (dimensional reduction, differential expression) should also not be influenced by variation in sequencing depth._
 
 <p align="center">
 <img src="./img/sequencing_depth.png" width="400">
 </p>
-
-
-
-From the Satija sctransform paper [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)], they explained nicely the qualities of an effectively normalized dataset:
-
-1. _In general, the normalized expression level of a gene should not be correlated with the total sequencing depth of a cell. Downstream analytical tasks (dimensional reduction, differential expression) should also not be influenced by variation in sequencing depth._
 
 2. _The variance of a normalized gene (across cells) should primarily reflect biological heterogeneity, independent of gene abundance or sequencing depth. For example, genes with high variance after normalization should be differentially expressed across cell types, while housekeeping genes should exhibit low variance. Additionally, the variance of a gene should be similar when considering either deeply sequenced cells, or shallowly sequenced cells._
 
@@ -52,7 +46,7 @@ Sctransform creates a generalized linear model (GLM) for each gene with UMI coun
 
 1. _We do not assume a fixed “size,” or expected total molecular count, for any cell._
 
-2. _Our regularization procedure explicitly learns and accounts for the well-established relationship  between a gene’s mean abundance and variance in single-cell data_
+2. _Our regularization procedure explicitly learns and accounts for the well-established relationship between a gene’s mean abundance and variance in single-cell data_
 
 3. _Our VST is data driven and does not involve heuristic steps, such as a log-transformation, pseudocount addition, or z-scoring._
 
