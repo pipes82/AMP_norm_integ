@@ -52,7 +52,11 @@ From the Satija sctransform paper [[Hafemeister & Satija, 2019](https://genomebi
 
 2. _The variance of a normalized gene (across cells) should primarily reflect biological heterogeneity, independent of gene abundance or sequencing depth. For example, genes with high variance after normalization should be differentially expressed across cell types, while housekeeping genes should exhibit low variance. Additionally, the variance of a gene should be similar when considering either deeply sequenced cells, or shallowly sequenced cells._
 
-Many of the current methods for normalization rely on per cell size factors; however, these methods assume the **RNA content is constant for all cells in the dataset** and that a single scaling factor for all genes can be applied [[Hafemeister & Satija, 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)]. A frequently observed feature of scRNA-seq data normalized using these methods is that the largest source of variation (PC1) in the dataset is the library size, indicating ineffective normalization. 
+In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) the authors explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that **effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below)**. Additionally, **substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below)**. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+
+<p align="center">
+<img src="../img/SCT_Fig1.png" width="600">
+</p>
 
 [Germain et. al. (2020)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02136-7)
 found sctransform to perform better than other methods for separating subpopulations and removing the effect of library size.
@@ -66,8 +70,6 @@ Sctransform creates a generalized linear model (GLM) for each gene with UMI coun
 3. _Our VST is data driven and does not involve heuristic steps, such as a log-transformation, pseudocount addition, or z-scoring._
 
 4. _... Pearson residuals are independent of sequencing depth and can be used for variable gene selection, dimensional reduction, clustering, visualization, and differential expression._
-
-The sctransform paper showed that the **same constant scaling factor cannot normalize different groups of genes**, by demonstrating the inability of scaling factors to effectively normalize high abundance genes. In addition, with log-normalized data, it was observed that **cells with low total UMI counts were found to have much higher variance for the more highly abundant genes,** thereby lowering the variance for other gene groups. 
 
 I would use R code similar to the code below to run sctransform (I also install the glmGamPoi package to improve speed). In the code below, I regress out mitochondrial content and cell cycle scores, but I would generally check my data before including these terms:
 
