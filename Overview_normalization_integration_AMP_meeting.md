@@ -183,3 +183,5 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 <p align="center">
 <img src="./img/SC_umap_split_int.png" width="600">
 </p>
+
+# Identification of subpopulations & differences in disease
