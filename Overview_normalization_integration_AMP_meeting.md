@@ -1,4 +1,4 @@
-# Single-cell RNA-seq workflow for identifying cell types and cell states: Normalization & integration
+# Single-cell RNA-seq workflow for identifying cell types and cell states
 
 _**By Mary Piper (Pfizer), including materials by the [Harvard Chan Bioinformatics Core](https://hbctraining.github.io/main/)**_
 
@@ -185,3 +185,63 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 </p>
 
 # Identification of subpopulations & differences in disease
+
+To identify different subpopulations of major cell types, I would perform the following:
+
+1. Clustering with a variety of resolutions
+2. Cluster QC for exploring proportion cells per cluster by condition, identifying junk clusters (by nGene, nUMI, mitoRatio metrics), and looking at segregation due to cell cycle or condition
+3. Exploring known cell type markers for cell types or subtypes of interest to identify major clusters
+4. Performing marker identification to verify cell types identified by known markers and to determine identity of unknown cell type clusters.
+5. Subclustering for any cell types needing more detailed characterization.
+6. Pseudobulk differential expression analysis for identification of changes due to differences in condition.
+
+
+```r
+# Determine the clusters for various resolutions                                
+seurat_integrated <- FindClusters(object = seurat_integrated,
+                               resolution = c(0.4, 0.6, 0.8, 1.0, 1.4))
+
+# Assign identity of clusters
+Idents(object = seurat_integrated) <- "integrated_snn_res.0.8"
+
+# Determine metrics to plot present in seurat_integrated@meta.data
+metrics <-  c("nUMI", "nGene", "S.Score", "G2M.Score", "mitoRatio")
+
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = metrics,
+            pt.size = 0.4, 
+            order = TRUE,
+            min.cutoff = 'q10',
+            label = TRUE)
+
+# Known cell type markers
+FeaturePlot(seurat_integrated, 
+            reduction = "umap", 
+            features = c("CD14", "LYZ"), 
+            order = TRUE,
+            min.cutoff = 'q10', 
+            label = TRUE)
+
+markers <- list()
+markers[["CD14+ monocytes"]] <- c("CD14", "LYZ")
+markers[["FCGR3A+ monocyte"]] <- c("FCGR3A", "MS4A7")
+markers[["Macrophages"]] <- c("MARCO", "ITGAM", "ADGRE1")
+markers[["Conventional dendritic"]] <- c("FCER1A", "CST3")
+markers[["Plasmacytoid dendritic"]] <- c("IL3RA", "GZMB", "SERPINF1", "ITM2C")
+
+# Create dotplot based on RNA expression
+DotPlot(seurat_integrated, markers, assay="RNA")
+
+# Find all markers
+# Find markers for every cluster compared to all remaining cells, report only the positive ones
+markers <- FindAllMarkers(object = seurat_integrated, 
+                          only.pos = TRUE,
+                          logfc.threshold = 0.25)
+
+# Find shared markers
+cluster0_conserved_markers <- FindConservedMarkers(seurat_integrated,
+                              ident.1 = 0,
+                     	      grouping.var = "sample",
+                              only.pos = TRUE,
+		              logfc.threshold = 0.25)
