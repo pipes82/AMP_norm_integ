@@ -52,7 +52,7 @@ Sctransform creates a generalized linear model (GLM) for each gene with UMI coun
 
 4. _... Pearson residuals are independent of sequencing depth and can be used for variable gene selection, dimensional reduction, clustering, visualization, and differential expression._
 
-The sctransform paper showed that the same constant scaling factor cannot normalize different groups of genes, by demonstrating the inability of scaling factors to effectively normalize high abundance genes. In addition, with log-normalized data, it was observed that cells with low total UMI counts were found to have much higher variance for the more highly abundant genes, thereby lowering the variance for other gene groups. 
+The sctransform paper showed that the **same constant scaling factor cannot normalize different groups of genes**, by demonstrating the inability of scaling factors to effectively normalize high abundance genes. In addition, with log-normalized data, it was observed that **cells with low total UMI counts were found to have much higher variance for the more highly abundant genes,** thereby lowering the variance for other gene groups. 
 
 I would use R code similar to the code below to run sctransform (I also install the glmGamPoi package to improve speed). In the code below, I regress out mitochondrial content and cell cycle scores, but I would generally check my data before including these terms:
 
