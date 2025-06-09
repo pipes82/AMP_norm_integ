@@ -55,7 +55,7 @@ From the Satija sctransform paper [[Hafemeister & Satija, 2019](https://genomebi
 In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) the authors explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that **effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below)**. Additionally, **substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below)**. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
 
 <p align="center">
-<img src="../img/SCT_Fig1.png" width="600">
+<img src="./img/SCT_Fig1.png" width="600">
 </p>
 
 [Germain et. al. (2020)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02136-7)
