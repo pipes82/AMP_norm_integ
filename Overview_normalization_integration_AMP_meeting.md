@@ -60,9 +60,6 @@ Sctransform creates a generalized linear model (GLM) for each gene with UMI coun
 
 The sctransform paper showed that the same constant scaling factor cannot normalize different groups of genes, by demonstrating the inability of scaling factors to effectively normalize high abundance genes. In addition, with log-normalized data, it was observed that cells with low total UMI counts were found to have much higher variance for the more highly abundant genes, thereby lowering the variance for other gene groups. 
 
-We first show that different groups of genes cannot be normalized by the same constant factor, representing an intrinsic challenge for scaling-factor-based normalization schemes, regardless of how the factors themselves are calculated. We instead propose to construct a generalized linear model (GLM) for each gene with UMI counts as the response and sequencing depth as the explanatory variable. We explore potential error models for the GLM and find that the use of unconstrained NB or ZINB models leads to overfitting of scRNA-seq data and a significant dampening of biological variance. To address this, we find that by pooling information across genes with similar abundances, we can regularize parameter estimates and obtain reproducible error models. The residuals of our “regularized negative binomial regression” represent effectively normalized data values that are no longer influenced by technical characteristics, but preserve heterogeneity driven by distinct biological states.
-
-
 I would use R code similar to the code below to run sctransform (I also install the glmGamPoi package to improve speed). In the code below, I regress out mitochondrial content and cell cycle scores, but I would generally check my data before including these terms:
 
 ```r
