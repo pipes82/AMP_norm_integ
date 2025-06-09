@@ -2,12 +2,29 @@
 
 _**By Mary Piper (Pfizer), including materials by the [Harvard Chan Bioinformatics Core](https://hbctraining.github.io/main/)**_
 
-# Normalization
+# Workflow for the identification of subpopulations & differences in disease
 
 <p align="center">
 <img src="./img/sc_workflow_2022.jpg" width="630">
 </p>
 
+To identify different subpopulations of major cell types, I would perform the following steps:
+
+1. Normalization with scTransform or equivalent that separates cell sequencing depth from normalized expression values
+2. (Optional) If differences in clustering exist between samples/conditions, then integration would be employed
+3. Clustering with a variety of resolutions
+4. Cluster QC:
+	- Exploring proportion cells per cluster by condition
+ 	- Identifying junk clusters (by nGene, nUMI, mitoRatio metrics)
+  	- Looking at segregation due to cell cycle or condition
+5. Exploring known cell type markers for expected cell types to identify major clusters
+6. Performing marker identification to verify cell types identified by known markers and to determine identity of unknown cell type clusters.
+7. Subclustering for any cell types needing more detailed characterization.
+8. Pseudobulk differential expression analysis for identification of changes due to differences in condition.
+
+* If I am expecting
+
+# Normalization
 
 _**Goals:**_ 
  
@@ -183,20 +200,6 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 <p align="center">
 <img src="./img/SC_umap_split_int.png" width="600">
 </p>
-
-# Identification of subpopulations & differences in disease
-
-To identify different subpopulations of major cell types, I would perform the following:
-
-1. Clustering with a variety of resolutions
-2. Cluster QC:
-	- Exploring proportion cells per cluster by condition
- 	- Identifying junk clusters (by nGene, nUMI, mitoRatio metrics)
-  	- Looking at segregation due to cell cycle or condition
-4. Exploring known cell type markers for cell types or subtypes of interest to identify major clusters
-5. Performing marker identification to verify cell types identified by known markers and to determine identity of unknown cell type clusters.
-6. Subclustering for any cell types needing more detailed characterization.
-7. Pseudobulk differential expression analysis for identification of changes due to differences in condition.
 
 
 ```r
