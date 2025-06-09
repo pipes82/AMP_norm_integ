@@ -189,11 +189,14 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
 To identify different subpopulations of major cell types, I would perform the following:
 
 1. Clustering with a variety of resolutions
-2. Cluster QC for exploring proportion cells per cluster by condition, identifying junk clusters (by nGene, nUMI, mitoRatio metrics), and looking at segregation due to cell cycle or condition
-3. Exploring known cell type markers for cell types or subtypes of interest to identify major clusters
-4. Performing marker identification to verify cell types identified by known markers and to determine identity of unknown cell type clusters.
-5. Subclustering for any cell types needing more detailed characterization.
-6. Pseudobulk differential expression analysis for identification of changes due to differences in condition.
+2. Cluster QC:
+	- Exploring proportion cells per cluster by condition
+ 	- Identifying junk clusters (by nGene, nUMI, mitoRatio metrics)
+  	- Looking at segregation due to cell cycle or condition
+4. Exploring known cell type markers for cell types or subtypes of interest to identify major clusters
+5. Performing marker identification to verify cell types identified by known markers and to determine identity of unknown cell type clusters.
+6. Subclustering for any cell types needing more detailed characterization.
+7. Pseudobulk differential expression analysis for identification of changes due to differences in condition.
 
 
 ```r
